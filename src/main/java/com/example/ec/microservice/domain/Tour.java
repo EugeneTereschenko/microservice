@@ -36,6 +36,8 @@ public class Tour {
 
     private Region region;
 
+    public Tour() {
+    }
 
     public Tour(String title,
                 String description,
