@@ -148,4 +148,22 @@ public class Tour {
     public void setRegion(Region region) {
         this.region = region;
     }
+
+
+    @Override
+    public String toString() {
+        return "Tour{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", blurb='" + blurb + '\'' +
+                ", price=" + price +
+                ", duration='" + duration + '\'' +
+                ", bullets='" + bullets + '\'' +
+                ", keywords='" + keywords + '\'' +
+                ", tourPackage=" + tourPackage +
+                ", diffuculty=" + diffuculty +
+                ", region=" + region +
+                '}';
+    }
 }
