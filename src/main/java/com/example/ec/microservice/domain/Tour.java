@@ -1,14 +1,21 @@
 package com.example.ec.microservice.domain;
 
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.*;
+import java.util.Map;
+import java.util.Objects;
 
 @Entity
+@Document
 public class Tour {
     @Id
     @GeneratedValue
     private Integer id;
 
     @Column
+    @Indexed
     private String title;
 
     @Column(length = 2000)
@@ -22,18 +29,26 @@ public class Tour {
 
     @Column
     private String duration;
+    @Indexed
+    private String tourPackageCode;
 
     @Column(length = 2000)
     private String bullets;
+    private String tourPackageName;
 
     @Column
     private String keywords;
+    private Map<String, String> details;
 
     @ManyToOne
     private TourPackage tourPackage;
 
+    @Column
+    @Enumerated
     private Difficulty diffuculty;
 
+    @Column
+    @Enumerated
     private Region region;
 
     public Tour() {
@@ -60,6 +75,26 @@ public class Tour {
         this.diffuculty = diffuculty;
         this.region = region;
     }
+
+    public Tour(String title,
+                TourPackage tourPackage,
+                Map<String, String> details) {
+        this.title = title;
+        this.description = description;
+        this.blurb = blurb;
+        this.price = price;
+        this.duration = duration;
+        this.bullets = bullets;
+        this.keywords = keywords;
+        this.tourPackage = tourPackage;
+        this.details = details;
+        this.diffuculty = diffuculty;
+        this.region = region;
+        this.tourPackageCode = tourPackage.getCode();
+        this.tourPackageName = tourPackage.getName();
+    }
+
+
 
     public Integer getId() {
         return id;
@@ -149,6 +184,29 @@ public class Tour {
         this.region = region;
     }
 
+    public String getTourPackageCode() {
+        return tourPackageCode;
+    }
+
+    public void setTourPackageCode(String tourPackageCode) {
+        this.tourPackageCode = tourPackageCode;
+    }
+
+    public String getTourPackageName() {
+        return tourPackageName;
+    }
+
+    public void setTourPackageName(String tourPackageName) {
+        this.tourPackageName = tourPackageName;
+    }
+
+    public Map<String, String> getDetails() {
+        return details;
+    }
+
+    public void setDetails(Map<String, String> details) {
+        this.details = details;
+    }
 
     @Override
     public String toString() {
@@ -164,6 +222,46 @@ public class Tour {
                 ", tourPackage=" + tourPackage +
                 ", diffuculty=" + diffuculty +
                 ", region=" + region +
+                "id='" + id + '\'' +
+                ", details=" + details +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tour tour = (Tour) o;
+        return Objects.equals(id, tour.id) &&
+                Objects.equals(title, tour.title) &&
+                Objects.equals(description, tour.description) &&
+                Objects.equals(blurb, tour.blurb) &&
+                Objects.equals(price, tour.price) &&
+                Objects.equals(duration, tour.duration) &&
+                Objects.equals(tourPackageCode, tour.tourPackageCode) &&
+                Objects.equals(bullets, tour.bullets) &&
+                Objects.equals(tourPackageName, tour.tourPackageName) &&
+                Objects.equals(keywords, tour.keywords) &&
+                Objects.equals(details, tour.details) &&
+                Objects.equals(tourPackage, tour.tourPackage) &&
+                diffuculty == tour.diffuculty && region == tour.region;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id,
+                title,
+                description,
+                blurb,
+                price,
+                duration,
+                tourPackageCode,
+                bullets,
+                tourPackageName,
+                keywords,
+                details,
+                tourPackage,
+                diffuculty,
+                region);
     }
 }

@@ -1,12 +1,22 @@
 [{
     "packageType": "Backpack Cal",
-    "title": "The Death Valley Survivor's  Trek",
-    "blurb": "Hot stuff? Need more of a challenge?",
-    "description": "This 2 day",
-    "bullets": "24-mile",
-    "difficulty": "Difficult",
-    "duration": "2 days",
-    "price": "250",
-    "region": "Southern",
-    "keywords": "Hiking, National Parks, Yosemite"
+    "title": "Big Sur Retreat",
+    "blurb": "Big Sur is big country",
+    "description": "The region know as Big Sur",
+    "difficulty": "Medium",
+    "length": "3 days",
+    "price": "750",
+    "region": "Central East",
+    "keywords": "Hiking, National Parks, Big Sur"
+},
+{
+    "packageType": "California Calm",
+    "title": "Day Spa Package",
+    "description": "The Day Spa Package: One day, one spa, but not just any day or any other spa.",
+    "audience": "Girl Friend getaway",
+    "blurb": "Trying to pack some serious relaxation into a short timeframe? Try our Day Spa Package",
+    "price": "550",
+    "keywords": "Spa, Relaxation, Ojai, Art, Yoga",
+    "region": "Southern California",
+    "surcharge": "100"
 }]

@@ -14,6 +14,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.PropertyAccessor.FIELD;
@@ -57,40 +59,34 @@ public class MicroserviceApplication implements CommandLineRunner {
     private void createTours(String fileToImport) throws IOException {
         TourFromFile.read(fileToImport).forEach(importedTour ->
                 tourService.createTour(importedTour.getTitle(),
-                        importedTour.getDescription(),
-                        importedTour.getBlurb(),
-                        importedTour.getPrice(),
-                        importedTour.getDuration(),
-                        importedTour.getBullets(),
-                        importedTour.getKeywords(),
-                        importedTour.getPackageType(),
-                        importedTour.getDifficulty(),
-                        importedTour.getRegion())
+                                        importedTour.getPackageName(),
+                                        importedTour.getDetails())
         );
     }
 
     private static class TourFromFile {
-        private String title, description, blurb, price, duration,
-                bullets, keywords, packageType, difficulty, region;
+        private String title;
+                String packageName;
+                Map<String, String> details;
 
-        static List<TourFromFile> read(String fileToImport) throws IOException {
-            return new ObjectMapper().setVisibility(FIELD, ANY)
-                    .readValue(new FileInputStream(fileToImport), new TypeReference<List<TourFromFile>>() {
-                    });
+
+        protected TourFromFile(Map<String, String> record) {
+            this.title = record.get("title");
+            this.packageName = record.get("packageType");
+            this.details = record;
+            this.details.remove("packageType");
+            this.details.remove("title");
         }
 
-        protected TourFromFile() {}
+        static List<TourFromFile> read(String fileToImport) throws IOException {
+            List<Map<String, String>> records = new ObjectMapper().setVisibility(FIELD, ANY)
+                    .readValue(new FileInputStream(fileToImport), new TypeReference<List<Map<String, String>>>() {});
+            return records.stream().map(TourFromFile::new).collect(Collectors.toList());
+        }
 
 
         String getTitle() { return title; }
-        String getDescription() { return description; }
-        String getBlurb() { return blurb; }
-        Integer getPrice() { return Integer.valueOf(price); }
-        String getDuration() { return duration; }
-        String getBullets() { return bullets; }
-        String getKeywords() { return keywords; }
-        String getPackageType() { return packageType; }
-        Difficulty getDifficulty() { return Difficulty.valueOf(difficulty); }
-        Region getRegion() { return Region.valueOf(region); }
+        String getPackageName() { return packageName;}
+        Map<String, String> getDetails() { return details; }
     }
 }

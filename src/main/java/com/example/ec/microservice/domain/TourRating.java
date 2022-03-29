@@ -1,19 +1,37 @@
 package com.example.ec.microservice.domain;
 
+import com.sun.istack.NotNull;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 @Entity
+@Document
 public class TourRating {
 
     @EmbeddedId
     private TourRatingPk pk;
+    @Id
+    private String id;
+
+    private String tourId;
 
     @Column(nullable = false)
+    @NotNull
+    private Integer customerId;
+
+    @Min(0)
+    @Max(5)
     private Integer score;
 
     @Column
+    @Size(max = 255)
     private String comment;
 
     public TourRating() {
