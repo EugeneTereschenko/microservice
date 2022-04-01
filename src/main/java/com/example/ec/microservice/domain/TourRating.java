@@ -1,28 +1,24 @@
 package com.example.ec.microservice.domain;
 
-import com.sun.istack.NotNull;
+
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
 @Document
 public class TourRating {
 
-    @EmbeddedId
-    private TourRatingPk pk;
     @Id
     private String id;
 
     private String tourId;
 
-    @Column(nullable = false)
     @NotNull
     private Integer customerId;
 
@@ -30,25 +26,51 @@ public class TourRating {
     @Max(5)
     private Integer score;
 
-    @Column
     @Size(max = 255)
     private String comment;
 
     public TourRating() {
     }
 
-    public TourRating(TourRatingPk pk, Integer score, String comment) {
-        this.pk = pk;
+    public TourRating( String id, Integer customerId) {
+        this.id = id;
+        this.customerId = customerId;
+    }
+
+    public TourRating(String id, String tourId, Integer customerId, @Min(0) @Max(5) Integer score, @Size(max = 255) String comment) {
+        this.id = id;
+        this.tourId = tourId;
+        this.customerId = customerId;
         this.score = score;
         this.comment = comment;
     }
 
-    public TourRatingPk getPk() {
-        return pk;
+    public TourRating(String id, Integer customerId, Integer score, String comment) {
     }
 
-    public void setPk(TourRatingPk pk) {
-        this.pk = pk;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTourId() {
+        return tourId;
+    }
+
+    public void setTourId(String tourId) {
+        this.tourId = tourId;
+    }
+
+    public Integer getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
     public Integer getScore() {
@@ -70,7 +92,9 @@ public class TourRating {
     @Override
     public String toString() {
         return "TourRating{" +
-                "pk=" + pk +
+                "id='" + id + '\'' +
+                ", tourId='" + tourId + '\'' +
+                ", customerId=" + customerId +
                 ", score=" + score +
                 ", comment='" + comment + '\'' +
                 '}';

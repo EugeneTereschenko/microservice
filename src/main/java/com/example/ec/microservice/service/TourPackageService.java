@@ -2,11 +2,16 @@ package com.example.ec.microservice.service;
 
 import com.example.ec.microservice.domain.TourPackage;
 import com.example.ec.microservice.repo.TourPackageRepository;
+import com.example.ec.microservice.repo.TourRatingRepository;
+import com.example.ec.microservice.repo.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class TourPackageService {
+
     private TourPackageRepository tourPackageRepository;
 
     @Autowired

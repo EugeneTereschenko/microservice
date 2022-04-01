@@ -1,12 +1,11 @@
 package com.example.ec.microservice.service;
 
-import com.example.ec.microservice.domain.Difficulty;
-import com.example.ec.microservice.domain.Region;
 import com.example.ec.microservice.domain.Tour;
 import com.example.ec.microservice.domain.TourPackage;
 import com.example.ec.microservice.repo.TourPackageRepository;
 import com.example.ec.microservice.repo.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;

@@ -1,18 +1,16 @@
 package com.example.ec.microservice.domain;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
-@Entity
+
+
 @Document
 public class TourPackage {
     @Id
     private String code;
 
-    @Column
     private String name;
 
     protected TourPackage() {

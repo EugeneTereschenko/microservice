@@ -1,15 +1,17 @@
 package com.example.ec.microservice;
 
-import com.example.ec.microservice.domain.Difficulty;
-import com.example.ec.microservice.domain.Region;
 import com.example.ec.microservice.service.TourPackageService;
 import com.example.ec.microservice.service.TourService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.client.MongoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,6 +22,9 @@ import java.util.stream.Collectors;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.PropertyAccessor.FIELD;
 
+/*@ComponentScan(basePackages = {"com.example.ec.microservice.repo"})
+@ComponentScan(basePackages = {"com.example.ec.microservice.service"})*/
+@EnableMongoRepositories(basePackages = {"com.example.ec.microservice.repo"})
 @SpringBootApplication
 public class MicroserviceApplication implements CommandLineRunner {
 
@@ -36,10 +41,10 @@ public class MicroserviceApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         createTourPackages();
-        long numOfPackages = tourPackageService.total();
+//        long numOfPackages = tourPackageService.total();
 
         createTours("ExploreCalifornia.json");
-        long numOfTours = tourService.total();
+  //      long numOfTours = tourService.total();
     }
 
 
@@ -89,4 +94,10 @@ public class MicroserviceApplication implements CommandLineRunner {
         String getPackageName() { return packageName;}
         Map<String, String> getDetails() { return details; }
     }
+
+    @Bean
+    public MongoTemplate mongoTemplate(MongoClient mongoClient) throws Exception {
+        return new MongoTemplate(mongoClient, "databaseName");
+    }
+
 }
